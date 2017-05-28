@@ -2,7 +2,7 @@
 
 
 class Discovery(object):
-    def register_service(self, name, ip, port, ttl):
+    def register_service(self, name, ip_port, data='', ttl=None):
         raise NotImplementedError()
 
     def refresh_service(self, name, ttl):
@@ -11,20 +11,17 @@ class Discovery(object):
     def unregister_service(self, name):
         raise NotImplementedError()
 
-    def get_service_address(self, name):
+    def update_service(self, name, ip_port, data, ttl=None):
         raise NotImplementedError()
 
-    def watch_service_address(self, name):
+    def unregister_service(self, name):
         raise NotImplementedError()
 
-    def put(self, name, key, value):
+    def get_service(self, name):
         raise NotImplementedError()
 
-    def get(self, name, key):
+    def watch_service(self, name, callback):
         raise NotImplementedError()
 
-    def delete(self, name, key):
-        raise NotImplementedError()
-
-    def watch(self, name, key):
+    def unwatch_service(self, name):
         raise NotImplementedError()
