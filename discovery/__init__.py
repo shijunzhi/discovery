@@ -58,6 +58,7 @@ if __name__ == '__main__':
     serv.update_service('test', ('10.1.1.1', 8080), 'watch test')
     time.sleep(5)
 
-    print('\n===unregister service')
+    print('\n===unwatch and unregister service')
+    serv.unwatch_service('test')
     serv.unregister_service('test')
     print('\n===end')
