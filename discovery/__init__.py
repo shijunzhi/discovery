@@ -35,12 +35,15 @@ if __name__ == '__main__':
 
     import time
 
+    print('===start')
     serv = DiscoveryFactory.create(ETCD2, '127.0.0.1', 2379)
 
+    print('\n===register service')
     serv.register_service('test', ('127.0.0.1', 8080), 'test', 30)
     ip_port, data = serv.get_service('test')
     print('service ip %s, port %d, data %s' % (ip_port[0], ip_port[1], data))
 
+    print('\n===update service')
     serv.update_service('test', ('192.168.1.1', 8080), None)
     ip_port, data = serv.get_service('test')
     print('service ip %s, port %d, data %s' % (ip_port[0], ip_port[1], data))
@@ -49,9 +52,12 @@ if __name__ == '__main__':
     ip_port, data = serv.get_service('test')
     print('service ip %s, port %d, data %s' % (ip_port[0], ip_port[1], data))
 
+    print('\n===watch service')
     serv.watch_service('test', watch_callback)
     serv.refresh_service('test', 5)
     serv.update_service('test', ('10.1.1.1', 8080), 'watch test')
     time.sleep(5)
 
+    print('\n===unregister service')
     serv.unregister_service('test')
+    print('\n===end')

@@ -160,7 +160,7 @@ class WatchServiceThread(threading.Thread):
         while not self.stop:
             try:
                 result = watch_conn.watch(key=key, index=start_index,
-                                          timeout=30, recursive=True)
+                                          timeout=10, recursive=True)
                 if self.stop:
                     return
                 start_index = result.modifiedIndex + 1
@@ -184,11 +184,12 @@ class WatchServiceThread(threading.Thread):
                     callback(True, serv_name, None, None)
                     return
 
+            except etcd.EtcdWatchTimedOut:
+                pass
+
             except etcd.EtcdConnectionFailed:
                 callback(True, serv_name, None, None)
                 return
-            except etcd.EtcdWatchTimedOut:
-                pass
 
     def _parse_watch_result(self, etcd_result):
         ip_port = None
